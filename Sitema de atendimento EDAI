@@ -1,0 +1,68 @@
+#SIMULAÇÃO DE ATENDIMENTO P/SENHA
+#1. Retirar senha / Adicionar cliente
+#2. Esperar chamada / Atender o cliente
+#3. Listar senhas / Listar fila de espera
+#4. Atendimento prioritário
+#5. Fechar o programa
+ 
+from collections import deque
+ctd=0
+historico=[]
+def isEmpty(lista):
+   if len(lista) == 0:
+       return True
+   else:
+       return False
+ 
+def listar(lista):
+   print(len(lista)," Cliente(s) na Lista de espera: ")
+   for i in lista:
+       print(f"{i}", end=" ")
+   print("\n-------------------------------")
+ 
+clientes = deque() #instância da class deque / criação de um obj
+ 
+#--------------------------- MENU
+while(True):
+   #---- Lista de opções
+   print("\n =============== MENU =============== ")
+   print("#1. Retirar senha / Adicionar cliente")
+   print("#2. Esperar chamada / Atender o cliente")
+   print("#3. Listar senhas / Listar fila de espera")
+   print("#4. Atendimento prioritário")
+   print("#4. Exibir histórico dos clientes atendidos")
+   print("#6. Fechar o programa")
+ 
+   opcao = input("Escolher uma Opção [1-6]: ")
+ 
+   if(opcao == "1"):
+       ctd+=1
+       senha=f"A{ctd}"
+       clientes.append(senha) # senhas automáticas
+       listar(clientes)
+   elif(opcao == "2"):
+       if isEmpty(clientes):
+           listar(clientes)
+       else:
+           atendido=(clientes.popleft(), "foi atendido(a)") #FIFO
+           historico.append(atendido)
+           listar(clientes)
+       print(historico)
+   elif(opcao == "3"):
+       listar(clientes)
+   elif(opcao == "4"):
+       if isEmpty(clientes):
+           listar(clientes)
+       else:
+           atendido=(clientes.pop(), " foi atendido(a) com prioridade") #LIFO
+           listar(clientes)
+           historico.append(atendido)
+           listar(clientes)
+   elif(opcao == "5"):
+       print(historico)
+   elif(opcao == "6"):
+       break
+   else:
+       print("Opção errada!\n")
+ 
+#Eliseu Calau
